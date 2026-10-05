@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Studi Kasus Algoritma & Pemrograman C++</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
+    <!-- Prism.js Dark Theme for C++ Highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <div class="brand-icon">
+                    <i class="bi bi-filetype-cpp"></i>
+                </div>
+                <span>Alpro<span class="text-primary">Dev</span>.cpp</span>
+            </a>
+            
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarMain">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-3">
+                    <li class="nav-item">
+                        <a class="nav-link active fw-semibold" href="#koleksi"><i class="bi bi-grid-fill me-1"></i> Studi Kasus</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-semibold" href="#" data-bs-toggle="modal" data-bs-target="#profileModal">
+                            <i class="bi bi-person-badge-fill me-1"></i> Profil Mahasiswa
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="d-flex align-items-center gap-2 flex-wrap">
+                    <!-- Backup & Restore Dropdown -->
+                    <div class="dropdown">
+                        <button class="btn btn-sm btn-outline-secondary dropdown-toggle rounded-pill px-3" type="button" data-bs-toggle="dropdown">
+                            <i class="bi bi-gear-fill me-1"></i> Opsi Data
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end shadow-sm">
+                            <li>
+                                <a class="dropdown-item" href="#" id="exportDataBtn">
+                                    <i class="bi bi-download me-2 text-success"></i> Backup JSON Data
+                                </a>
+                            </li>
+                            <li>
+                                <label class="dropdown-item mb-0" style="cursor: pointer;">
+                                    <i class="bi bi-upload me-2 text-primary"></i> Restore JSON File
+                                    <input type="file" id="importJsonInput" accept=".json" class="d-none">
+                                </label>
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <a class="dropdown-item text-danger" href="#" id="resetDataBtn">
+                                    <i class="bi bi-arrow-counterclockwise me-2"></i> Reset ke Data Awal
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Add New Case Study Button -->
+                    <button class="btn btn-sm btn-primary rounded-pill px-3 shadow-sm" onclick="openAddModal()">
+                        <i class="bi bi-plus-circle-fill me-1"></i> Tambah Kasus
+                    </button>
+
+                    <!-- Theme Toggle -->
+                    <button class="btn btn-sm btn-light border rounded-circle p-2 d-flex align-items-center justify-content-center" id="themeToggleBtn" style="width: 38px; height: 38px;" title="Ganti Mode Gelap/Terang">
+                        <i class="bi bi-moon-stars-fill text-primary" id="themeIcon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero-section">
+        <div class="container position-relative">
+            <div class="row align-items-center g-4">
+                <div class="col-lg-7">
+                    <span class="badge bg-white text-primary fw-bold px-3 py-2 rounded-pill mb-3">
+                        <i class="bi bi-mortarboard-fill me-1"></i> Blog UTS Algoritma & Pemrograman
+                    </span>
+                    <h1 class="display-5 fw-extrabold mb-3">Repositori Studi Kasus Pemrograman C++</h1>
+                    <p class="lead opacity-90 mb-4">
+                        Koleksi lengkap dokumentasi studi kasus, logika algoritma, analisis kompleksitas, dan implementasi kode C++ siap pakai untuk pembelajaran akademik dan praktikum.
+                    </p>
+                    <div class="d-flex flex-wrap gap-2">
+                        <a href="#koleksi" class="btn btn-light btn-lg rounded-pill px-4 fw-bold text-primary shadow-sm">
+                            <i class="bi bi-search me-2"></i> Jelajahi Masalah
+                        </a>
+                        <button class="btn btn-outline-light btn-lg rounded-pill px-4 fw-semibold" onclick="openAddModal()">
+                            <i class="bi bi-plus-lg me-2"></i> Tulis Kasus Baru
+                        </button>
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <div class="hero-stats shadow-lg">
+                        <div class="row g-3 text-center">
+                            <div class="col-4 border-end border-white border-opacity-25">
+                                <div class="fs-2 fw-bold" id="statTotalCount">0</div>
+                                <div class="small opacity-75">Studi Kasus</div>
+                            </div>
+                            <div class="col-4 border-end border-white border-opacity-25">
+                                <div class="fs-2 fw-bold" id="statTotalCategories">0</div>
+                                <div class="small opacity-75">Kategori</div>
+                            </div>
+                            <div class="col-4">
+                                <div class="fs-2 fw-bold" id="statTotalBookmarks">0</div>
+                                <div class="small opacity-75">Favorit</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container py-5 flex-grow-1" id="koleksi">
+        
+        <!-- Search & Filter Controls -->
+        <div class="row g-3 align-items-center mb-4">
+            <!-- Search Bar -->
+            <div class="col-12 col-md-5">
+                <div class="search-box">
+                    <i class="bi bi-search search-icon"></i>
+                    <input type="text" id="searchInput" class="form-control" placeholder="Cari kasus, algoritma, atau kata kunci...">
+                </div>
+            </div>
+
+            <!-- Difficulty Filter -->
+            <div class="col-6 col-md-3">
+                <select class="form-select rounded-pill px-3 py-2 shadow-sm" id="difficultyFilter">
+                    <option value="Semua">Semua Tingkat Kesulitan</option>
+                    <option value="Mudah">Mudah</option>
+                    <option value="Sedang">Sedang</option>
+                    <option value="Sulit">Sulit</option>
+                </select>
+            </div>
+
+            <!-- Sort By -->
+            <div class="col-6 col-md-2">
+                <select class="form-select rounded-pill px-3 py-2 shadow-sm" id="sortFilter">
+                    <option value="newest">Terbaru</option>
+                    <option value="oldest">Terlama</option>
+                    <option value="title-asc">Judul (A-Z)</option>
+                    <option value="title-desc">Judul (Z-A)</option>
+                </select>
+            </div>
+
+            <!-- Bookmark Filter Toggle -->
+            <div class="col-12 col-md-2 d-flex justify-content-md-end">
+                <button class="btn btn-outline-warning w-100 rounded-pill px-3 py-2 fw-semibold" id="bookmarkFilterBtn">
+                    <i class="bi bi-star-fill me-1"></i> Favorit
+                </button>
+            </div>
+        </div>
+
+        <!-- Category Filter Chips -->
+        <div class="d-flex align-items-center gap-2 overflow-x-auto pb-3 mb-4 scrollbar-none">
+            <button class="category-chip active" data-category="Semua">Semua Kategori</button>
+            <button class="category-chip" data-category="Studi Kasus Nyata">Studi Kasus Nyata</button>
+            <button class="category-chip" data-category="Sorting & Searching">Sorting & Searching</button>
+            <button class="category-chip" data-category="Array & Matrix">Array & Matrix</button>
+            <button class="category-chip" data-category="Rekursi & DP">Rekursi & DP</button>
+            <button class="category-chip" data-category="Dasar C++">Dasar C++</button>
+            <button class="category-chip" data-category="Struktur Data">Struktur Data</button>
+        </div>
+
+        <!-- Section Title & Counter -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h4 class="fw-bold mb-0">Daftar Studi Kasus</h4>
+            <span class="badge bg-secondary rounded-pill px-3 py-2" id="resultCountBadge">0 Studi Kasus</span>
+        </div>
+
+        <!-- Case Studies Grid Cards -->
+        <div class="row g-4" id="caseStudiesGrid">
+            <!-- Rendered by JavaScript -->
+        </div>
+
+        <!-- Empty State -->
+        <div id="emptyState" class="empty-state d-none">
+            <div class="empty-state-icon">
+                <i class="bi bi-folder-x"></i>
+            </div>
+            <h4 class="fw-bold">Tidak ada studi kasus yang cocok</h4>
+            <p class="text-muted">Coba ubah kata kunci pencarian atau ubah filter kategori/kesulitan yang dipilih.</p>
+            <button class="btn btn-outline-primary rounded-pill mt-2" onclick="openAddModal()">
+                <i class="bi bi-plus-circle me-1"></i> Buat Studi Kasus Baru
+            </button>
+        </div>
+
+    </main>
+
+    <!-- Detail Modal -->
+    <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div>
+                        <div class="d-flex align-items-center gap-2 mb-2 flex-wrap">
+                            <span class="badge-category" id="detailModalCategory">Kategori</span>
+                            <span class="badge-diff-mudah" id="detailModalDifficulty">Mudah</span>
+                            <span class="small text-muted" id="detailModalDate"></span>
+                        </div>
+                        <h4 class="modal-title fw-bold" id="detailModalTitle">Judul Kasus</h4>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+                    
+                    <!-- Complexity & Meta Information -->
+                    <div class="row g-3 mb-4">
+                        <div class="col-sm-6 col-md-3">
+                            <div class="p-3 rounded-3 border bg-light bg-opacity-50">
+                                <div class="small text-muted mb-1"><i class="bi bi-clock-history me-1"></i> Waktu (Time)</div>
+                                <div class="fw-bold font-monospace" id="detailModalTime">O(n)</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-3">
+                            <div class="p-3 rounded-3 border bg-light bg-opacity-50">
+                                <div class="small text-muted mb-1"><i class="bi bi-memory me-1"></i> Memori (Space)</div>
+                                <div class="fw-bold font-monospace" id="detailModalSpace">O(1)</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="p-3 rounded-3 border bg-light bg-opacity-50 h-100">
+                                <div class="small text-muted mb-1"><i class="bi bi-tags-fill me-1"></i> Tags / Topik</div>
+                                <div id="detailModalTags"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Problem Statement -->
+                    <div class="mb-4">
+                        <h5 class="fw-bold text-primary mb-2">
+                            <i class="bi bi-file-text-fill me-2"></i>Deskripsi Masalah & Studi Kasus
+                        </h5>
+                        <div class="p-3 rounded-3 border explanation-content" id="detailModalProblem"></div>
+                    </div>
+
+                    <!-- Input / Output Specification -->
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-6">
+                            <h6 class="fw-bold text-secondary mb-2"><i class="bi bi-arrow-right-circle-fill me-1 text-primary"></i> Contoh Masukan (Input)</h6>
+                            <div class="output-box" id="detailModalInput"></div>
+                        </div>
+                        <div class="col-md-6">
+                            <h6 class="fw-bold text-secondary mb-2"><i class="bi bi-terminal-fill me-1 text-success"></i> Contoh Keluaran (Output / Terminal)</h6>
+                            <div class="output-box" id="detailModalOutput"></div>
+                        </div>
+                    </div>
+
+                    <!-- C++ Source Code with Syntax Highlighting -->
+                    <div class="mb-4">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h5 class="fw-bold text-primary mb-0">
+                                <i class="bi bi-code-square me-2"></i>Implementasi Source Code C++
+                            </h5>
+                            <button class="btn-copy-code" id="detailCopyBtn">
+                                <i class="bi bi-clipboard me-1"></i> Salin Kode
+                            </button>
+                        </div>
+                        <div class="code-container">
+                            <div class="code-header">
+                                <span class="lang-badge"><i class="bi bi-file-earmark-code"></i> main.cpp</span>
+                                <span>C++20 / g++</span>
+                            </div>
+                            <pre><code class="language-cpp" id="detailModalCode"></code></pre>
+                        </div>
+                    </div>
+
+                    <!-- Explanation -->
+                    <div class="mb-2">
+                        <h5 class="fw-bold text-primary mb-2">
+                            <i class="bi bi-lightbulb-fill me-2"></i>Penjelasan Logika & Analisis Algoritma
+                        </h5>
+                        <div class="p-3 rounded-3 border explanation-content" id="detailModalExplanation"></div>
+                    </div>
+
+                </div>
+                <div class="modal-footer d-flex justify-content-between">
+                    <div>
+                        <button class="btn btn-outline-danger btn-sm rounded-pill px-3" id="detailDeleteBtn">
+                            <i class="bi bi-trash3 me-1"></i> Hapus
+                        </button>
+                        <button class="btn btn-outline-primary btn-sm rounded-pill px-3 ms-2" id="detailEditBtn">
+                            <i class="bi bi-pencil-square me-1"></i> Edit Kasus
+                        </button>
+                    </div>
+                    <button type="button" class="btn btn-secondary rounded-pill px-4" data-bs-dismiss="modal">Tutup</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add / Edit Modal Form -->
+    <div class="modal fade" id="formModal" tabindex="-1" aria-labelledby="formModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold" id="formModalTitle">Tambah Studi Kasus</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="caseStudyForm">
+                    <div class="modal-body p-4">
+                        <div class="row g-3">
+                            <div class="col-12">
+                                <label class="form-label fw-semibold">Judul Studi Kasus <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="formTitle" placeholder="Contoh: Sistem Kasir Restoran Sederhana" required>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Kategori</label>
+                                <select class="form-select" id="formCategory">
+                                    <option value="Dasar C++">Dasar C++</option>
+                                    <option value="Array & Matrix">Array & Matrix</option>
+                                    <option value="Sorting & Searching">Sorting & Searching</option>
+                                    <option value="Rekursi & DP">Rekursi & DP</option>
+                                    <option value="Struktur Data">Struktur Data</option>
+                                    <option value="Studi Kasus Nyata">Studi Kasus Nyata</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Tingkat Kesulitan</label>
+                                <select class="form-select" id="formDifficulty">
+                                    <option value="Mudah">Mudah</option>
+                                    <option value="Sedang">Sedang</option>
+                                    <option value="Sulit">Sulit</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Kompleksitas Waktu (Time Complexity)</label>
+                                <input type="text" class="form-control font-monospace" id="formTimeComplexity" placeholder="Contoh: O(n log n)">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Kompleksitas Memori (Space Complexity)</label>
+                                <input type="text" class="form-control font-monospace" id="formSpaceComplexity" placeholder="Contoh: O(1)">
+                            </div>
+
+                            <div class="col-12">
+                                <label class="form-label fw-semibold">Tags / Topik (pisahkan dengan koma)</label>
+                                <input type="text" class="form-control" id="formTags" placeholder="Array, Perulangan, Struct, QuickSort">
+                            </div>
+
+                            <div class="col-12">
+                                <label class="form-label fw-semibold">Ringkasan Singkat</label>
+                                <input type="text" class="form-control" id="formSummary" placeholder="Ringkasan 1-2 kalimat untuk kartu depan...">
+                            </div>
+
+                            <div class="col-12">
+                                <label class="form-label fw-semibold">Deskripsi Studi Kasus & Masalah</label>
+                                <textarea class="form-control" id="formProblem" rows="4" placeholder="Jelaskan skenario kasus, batasan, dan aturan program..."></textarea>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Contoh Masukan (Input Example)</label>
+                                <textarea class="form-control font-monospace" id="formInput" rows="3" placeholder="Contoh input data..."></textarea>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Contoh Keluaran (Output Example)</label>
+                                <textarea class="form-control font-monospace" id="formOutput" rows="3" placeholder="Contoh output console..."></textarea>
+                            </div>
+
+                            <div class="col-12">
+                                <label class="form-label fw-semibold">Source Code C++ <span class="text-danger">*</span></label>
+                                <textarea class="form-control font-monospace" id="formCode" rows="10" placeholder="#include <iostream>&#10;using namespace std;&#10;&#10;int main() { ... }" required></textarea>
+                            </div>
+
+                            <div class="col-12">
+                                <label class="form-label fw-semibold">Penjelasan Solusi & Logika Algoritma</label>
+                                <textarea class="form-control" id="formExplanation" rows="4" placeholder="Jelaskan cara kerja algoritma, fungsi kunci, dan efisiensinya..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary rounded-pill px-4" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary rounded-pill px-4">
+                            <i class="bi bi-check-circle me-1"></i> Simpan Studi Kasus
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Author & Profile Modal (For UTS / Academic Assignment) -->
+    <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold" id="profileModalTitle">
+                        <i class="bi bi-person-circle text-primary me-2"></i>Profil Mahasiswa & Informasi Proyek
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4 text-center">
+                    <div class="mb-3">
+                        <div class="brand-icon mx-auto" style="width: 70px; height: 70px; font-size: 2rem;">
+                            <i class="bi bi-code-slash"></i>
+                        </div>
+                    </div>
+                    <h4 class="fw-bold mb-1">Tugas UTS Algoritma & Pemrograman</h4>
+                    <p class="text-muted mb-4">Blog Penyimpanan & Dokumentasi Studi Kasus C++</p>
+                    
+                    <div class="text-start bg-light p-3 rounded-3 border mb-3">
+                        <div class="row g-2 small">
+                            <div class="col-4 text-muted fw-semibold">Mata Kuliah:</div>
+                            <div class="col-8 fw-bold">Algoritma & Pemrograman</div>
+                            <div class="col-4 text-muted fw-semibold">Bahasa:</div>
+                            <div class="col-8 fw-bold">C++ (ISO Standard)</div>
+                            <div class="col-4 text-muted fw-semibold">Frontend:</div>
+                            <div class="col-8 fw-bold">HTML5, CSS3 (Bootstrap 5), JavaScript</div>
+                            <div class="col-4 text-muted fw-semibold">Storage:</div>
+                            <div class="col-8 fw-bold">Browser LocalStorage + JSON Export</div>
+                        </div>
+                    </div>
+
+                    <p class="small text-muted mb-0">
+                        Dirancang untuk memudahkan pencarian, pengujian, dan dokumentasi algoritma pemrograman C++.
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary rounded-pill w-100" data-bs-dismiss="modal">Tutup</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Footer -->
+    <footer class="py-4 border-top text-center text-muted small mt-auto">
+        <div class="container">
+            <p class="mb-1 fw-semibold text-primary">Blog Studi Kasus Algoritma & Pemrograman C++</p>
+            <p class="mb-0">Dibuat menggunakan HTML5, Bootstrap 5, Prism.js, dan Vanilla JavaScript.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Prism.js for Syntax Highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-clike.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-c.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-cpp.min.js"></script>
+
+    <!-- App Data & Scripts -->
+    <script src="assets/js/data.js"></script>
+    <script src="assets/js/app.js"></script>
+</body>
+</html>
